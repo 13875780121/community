@@ -1,2 +1,8 @@
 server:
   port: 8887
+
+github:
+  client_id: Iv1.bd40fb0ebd8b9b08
+  client_secret: cea48daebcf74ba3186a7fc0929fca84456dce46
+  redirect_uri: http://localhost:8887/callbacK
+  access_token_url: https://github.com/login/oauth/access_token

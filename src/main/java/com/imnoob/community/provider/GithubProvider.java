@@ -4,14 +4,16 @@ import com.alibaba.fastjson.JSON;
 import com.imnoob.community.entities.AccessToken;
 import com.imnoob.community.entities.GithubUser;
 import okhttp3.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 @Component
 public class GithubProvider {
-    private final String url = "https://github.com/login/oauth/access_token";
+
+    @Value("${github.access_token_url}")
+    private  String url;
 
     public String getAccessToken(AccessToken accessTokenDTO) {
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
@@ -30,11 +32,11 @@ public class GithubProvider {
                 .url(url)
                 .post(body)
                 .build();
+
+
         try (Response response = client.newCall(request).execute()) {
 
-            //access_token=ghu_5QlC8xso7W6cVtllsKRqLr58IGVl2g1EOOwI&expires_in=28800&refresh_token=ghr_mPNMcDjA6I0WTvbk6wNTFwzlB3Leef3sYCjnLSQ1kfDHFxQGhYVNpaTWk3woO6u3icMb7y4HDA1p&refresh_token_expires_in=15811200&scope=&token_type=bearer
             String token = response.body().string().split("&")[0].split("=")[1];
-
             return token;
         } catch (Exception e) {
             e.printStackTrace();
