@@ -4,5 +4,21 @@ server:
 github:
   client_id: Iv1.bd40fb0ebd8b9b08
   client_secret: cea48daebcf74ba3186a7fc0929fca84456dce46
-  redirect_uri: http://localhost:8887/callbacK
+  redirect_uri: http://localhost:8887/callback
   access_token_url: https://github.com/login/oauth/access_token
+
+
+spring:
+  datasource:
+    username: root
+    password: 13875780121
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/community?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+mybatis:
+  mapper-locations: classpath:/mybatis/mapper/*.xml
+  config-location: classpath:/mybatis/config.xml
+  type-aliases-package: com.imnoob.community.model
+

@@ -1,8 +1,8 @@
 package com.imnoob.community.provider;
 
 import com.alibaba.fastjson.JSON;
-import com.imnoob.community.entities.AccessToken;
-import com.imnoob.community.entities.GithubUser;
+import com.imnoob.community.dto.AccessToken;
+import com.imnoob.community.dto.GithubUser;
 import okhttp3.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -26,7 +26,7 @@ public class GithubProvider {
                 .readTimeout(2000, TimeUnit.SECONDS)//设置读取超时时间
                 .build();
 
-        System.out.println(JSON.toJSONString(accessTokenDTO));
+
         RequestBody body = RequestBody.create(mediaType, JSON.toJSONString(accessTokenDTO));
         Request request = new Request.Builder()
                 .url(url)
@@ -35,8 +35,9 @@ public class GithubProvider {
 
 
         try (Response response = client.newCall(request).execute()) {
+            String str = response.body().string();
 
-            String token = response.body().string().split("&")[0].split("=")[1];
+            String token = str.split("&")[0].split("=")[1];
             return token;
         } catch (Exception e) {
             e.printStackTrace();
@@ -46,6 +47,7 @@ public class GithubProvider {
     }
 
     public GithubUser getUser(String accessToken) {
+        if (accessToken == null)  return null;
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url("https://api.github.com/user")
@@ -59,6 +61,6 @@ public class GithubProvider {
         } catch (Exception e) {
 
         }
-        return null;
+        return  null;
     }
 }

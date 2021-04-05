@@ -1,4 +1,4 @@
-package com.imnoob.community.entities;
+package com.imnoob.community.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

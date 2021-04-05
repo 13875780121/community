@@ -1,7 +1,7 @@
 /*!
- * HTML entities dialog plugin for Editor.md
+ * HTML dto dialog plugin for Editor.md
  *
- * @file        html-entities-dialog.js
+ * @file        html-dto-dialog.js
  * @author      pandao
  * @version     1.2.0
  * @updateTime  2015-03-08
@@ -14,7 +14,7 @@
 	var factory = function (exports) {
 
 		var $            = jQuery;
-		var pluginName   = "html-entities-dialog";
+		var pluginName   = "html-dto-dialog";
 		var selecteds    = [];
 		var entitiesData = [];
 
@@ -33,7 +33,7 @@
 			var dialogLang  = lang.dialog.htmlEntities;
 
 			var dialogContent = [
-				'<div class="' + classPrefix + 'html-entities-box" style=\"width: 760px;height: 334px;margin-bottom: 8px;overflow: hidden;overflow-y: auto;\">',
+				'<div class="' + classPrefix + 'html-dto-box" style=\"width: 760px;height: 334px;margin-bottom: 8px;overflow: hidden;overflow-y: auto;\">',
 				'<div class="' + classPrefix + 'grid-table">',
 				'</div>',
 				'</div>',
