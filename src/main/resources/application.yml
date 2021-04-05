@@ -22,3 +22,7 @@ mybatis:
   config-location: classpath:/mybatis/config.xml
   type-aliases-package: com.imnoob.community.model
 
+pagehelper:
+  page-size-zero: true
+  helperDialect: mysql
+  reasonable: true

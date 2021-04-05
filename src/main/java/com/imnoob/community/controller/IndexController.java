@@ -1,13 +1,18 @@
 package com.imnoob.community.controller;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.imnoob.community.dto.QuestionDTO;
 import com.imnoob.community.mapper.UserMapper;
 import com.imnoob.community.model.User;
 import com.imnoob.community.service.QuestionService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -24,23 +29,15 @@ public class IndexController {
     QuestionService questionService;
 
     @GetMapping("/")
-    String index(HttpServletRequest request, HttpServletResponse response, Model model){
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null)
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("token")){
-                String token = cookie.getValue();
-                User user = userMapper.selectByToken(token);
-                if (user != null){
-                    HttpSession session = request.getSession();
-                    session.setAttribute("user",user);
-                }
-                break;
-            }
-        }
+    String index(HttpServletRequest request,
+                 HttpServletResponse response,
+                 Model model,
+                 @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
+                 @RequestParam(value = "size",defaultValue = "8") Integer size){
 
-        List<QuestionDTO> list = questionService.findAllQuestions();
-        model.addAttribute("questions", list);
+
+        PageInfo<QuestionDTO> pageInfo = questionService.findAllQuestions(pageNum, size);
+        model.addAttribute("pageInfo", pageInfo);
         return "index";
     }
 

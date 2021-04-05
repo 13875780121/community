@@ -10,7 +10,6 @@ import org.apache.ibatis.type.Alias;
 public class User {
     private Long id;
 
-
     private String accountId;
 
 

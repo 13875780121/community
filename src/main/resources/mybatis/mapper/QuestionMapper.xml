@@ -12,5 +12,9 @@
         SELECT * FROM t_question
     </select>
 
+    <select id="findQuestionsById" resultType="Question" parameterType="java.lang.Long">
+        SELECT * FROM t_question WHERE creator = #{id}
+    </select>
+
 
 </mapper>
