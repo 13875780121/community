@@ -15,28 +15,32 @@
             <hr>
 
             <form action="/publish" method="post">
-                <input type="hidden" name="id" >
+                <input type="hidden" name="id" th:value="${id}">
 
                <!--       name="title"    description     tag   -->
                 <div class="form-group">
                     <label for="title">问题标题（简单扼要）:</label>
                     <input type="text" class="form-control"  id="title" name="title"
                            placeholder="问题标题……"
-                           autocomplete="off">
+                           autocomplete="off"
+                           th:value="${title}">
                 </div>
+
                 <div class="form-group" id="question-editor" style="z-index: 2">
                     <label for="description">问题补充 (必填，请参照右侧提示):</label>
                     <textarea name="description" id="description"
                               class="form-control"
                               cols="30"
-                              rows="10"></textarea>
+                              rows="10"
+                                th:text="${description}"></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="tag">添加标签:</label>
                     <input type="text" class="form-control"  id="tag" name="tag"
                            autocomplete="off"
-                           placeholder="输入标签，以，号分隔" >
+                           placeholder="输入标签，以，号分隔"
+                            th:value="${tag}">
                 </div>
                 <div class="container-fluid main ">
                     <div class="row">

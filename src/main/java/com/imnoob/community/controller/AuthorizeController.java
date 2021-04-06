@@ -73,10 +73,10 @@ public class AuthorizeController {
 
             Cookie cookie = new Cookie("token",token);
             response.addCookie(cookie);
-            return "redirect:index";
+            return "redirect:/";
         }else{
             //登陆失败
-            return "redirect:index";
+            return "redirect:/";
         }
 
     }

@@ -21,7 +21,7 @@
                     </div>
                     <div class="media-body">
                         <h5 class="media-heading">
-                            <span style="color: #c74747" th:text="${question.title}"></a>
+                            <a th:href="@{'/question/'+${question.id}}"><span style="color: #c74747" th:text="${question.title}"> </span></a>
                         </h5>
                         <span class="text-desc"><span th:text="${question.commentCount}"></span> 个回复 • <span
                                 th:text="${question.viewCount}"></span> 次浏览 • <span

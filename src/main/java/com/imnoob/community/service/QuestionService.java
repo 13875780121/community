@@ -52,4 +52,25 @@ public class QuestionService {
         PageInfo<Question> pageInfo = new PageInfo<>(list);
         return pageInfo;
     }
+
+    public QuestionDTO findQuestionById(Integer id) {
+        Question question = questionMapper.findQuestionById(id);
+        User user = userMapper.findById(question.getCreator());
+        QuestionDTO questionDTO = new QuestionDTO();
+        BeanUtils.copyProperties(question, questionDTO);
+        questionDTO.setUser(user);
+        return questionDTO;
+    }
+
+    public void createQuestion(Question question) {
+        questionMapper.createQuestion(question);
+    }
+
+    public int modifiedQuestion(Question question) {
+        return  questionMapper.modifiedQuestion(question);
+    }
+
+    public int incView(Long id) {
+        return questionMapper.incView(id);
+    }
 }

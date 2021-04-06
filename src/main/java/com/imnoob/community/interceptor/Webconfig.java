@@ -15,7 +15,9 @@ public class Webconfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
 
         registry.addInterceptor(sessionInterceptor).
-                addPathPatterns("/**").excludePathPatterns("/").excludePathPatterns("/index");
+                addPathPatterns("/**").excludePathPatterns("/").
+                excludePathPatterns("/index").
+                excludePathPatterns("/callback");
 
     }
 }

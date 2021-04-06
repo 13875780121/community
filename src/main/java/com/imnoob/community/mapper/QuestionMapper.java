@@ -12,4 +12,10 @@ public interface QuestionMapper {
     List<Question> findAllQuestions();
 
     List<Question> findQuestionsById(@Param("id") Long id);
+
+    Question findQuestionById(@Param("id") Integer id);
+
+    int modifiedQuestion(Question question);
+
+    int incView(@Param("id") Long id);
 }
