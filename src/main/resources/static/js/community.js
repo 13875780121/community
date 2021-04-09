@@ -28,6 +28,7 @@ function comment2target(targetId, type, content) {
         }),
         success: function (response) {
             if (response.code == 200) {
+
                 window.location.reload();
             } else {
                 if (response.code == 2003) {
@@ -37,9 +38,11 @@ function comment2target(targetId, type, content) {
                         window.localStorage.setItem("closable", true);
                     }
                 } else {
-                    alert(response.message);
+                    alert(response.msg);
                 }
             }
+
+
         },
         dataType: "json"
     });
@@ -49,6 +52,7 @@ function comment(e) {
     var commentId = e.getAttribute("data-id");
     var content = $("#input-" + commentId).val();
     comment2target(commentId, 2, content);
+
 }
 
 /**

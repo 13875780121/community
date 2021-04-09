@@ -16,7 +16,7 @@
         SELECT * FROM t_question WHERE creator = #{id}
     </select>
 
-    <select id="findQuestionById" resultType="Question" parameterType="java.lang.Integer">
+    <select id="findQuestionById" resultType="Question" parameterType="java.lang.Long">
         SELECT * FROM t_question WHERE id = #{id}
     </select>
 
@@ -68,6 +68,20 @@
         SET view_count = view_count + 1
         WHERE id = #{id}
     </update>
+
+    <update id="incCommentCount" parameterType="java.lang.Long">
+        update
+            t_question
+        SET comment_count = comment_count + 1
+        WHERE id = #{id}
+    </update>
+
+    <select id="selectByTag" parameterType="java.lang.String" resultType="Question">
+        SELECT * FROM t_question
+        WHERE tag REGEXP #{tag,jdbcType=VARCHAR}
+        order by comment_count desc
+        LIMIT 0 , 10
+    </select>
 
 
 </mapper>

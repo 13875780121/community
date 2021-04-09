@@ -1,5 +1,7 @@
 package com.imnoob.community.exception;
 
+import com.imnoob.community.enums.ExceptionEnum;
+
 public class CustomizeException extends RuntimeException {
     private String msg;
     private Integer code;

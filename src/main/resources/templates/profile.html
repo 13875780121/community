@@ -12,6 +12,8 @@
             <h2><span th:text="${sectionName}"></span></h2>
             <hr>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${section == 'questions'}">
+
+
                 <div class="media" th:each="question : ${pageInfo.list}">
                     <div class="media-left">
                         <a href="#">
@@ -31,12 +33,12 @@
             </div>
             <nav aria-label="Page navigation">
                 <ul class="pagination">
-                    <li class="page-item" th:if="${pageInfo.pageNum!=1}"><a class="page-link" th:href="@{/profile/${section}/(pageNum=1)}">首页</a></li>
-                    <li class="page-item" th:if="${pageInfo.pageNum!=1}"><a class="page-link" th:href="@{/profile/${section}/(pageNum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:${pageInfo.pages})}">上一页</a></li>
+                    <li class="page-item" th:if="${pageInfo.pageNum != 1}"><a class="page-link" th:href="@{'/profile/'+${section}(pageNum=1)}">首页</a></li>
+                    <li class="page-item" th:if="${pageInfo.pageNum!=1}"><a class="page-link" th:href="@{'/profile/'+${section}(pageNum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:${pageInfo.pages})}">上一页</a></li>
                     <li class="page-item"><a class="page-link"><span th:text="第+${pageInfo.pageNum}+页"></span></a></li>
                     <li class="page-item"><a class="page-link"><span th:text="共+${pageInfo.pages}+页"></span></a></li>
-                    <li class="page-item" th:if="${pageInfo.pageNum != pageInfo.pages}"><a class="page-link" th:href="@{/profile/${section}/(pageNum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a></li>
-                    <li class="page-item" th:if="${pageInfo.pageNum != pageInfo.pages}"><a class="page-link" th:href="@{/profile/${section}/(pageNum=${pageInfo.pages})}">尾页</a></li>
+                    <li class="page-item" th:if="${pageInfo.pageNum != pageInfo.pages}"><a class="page-link" th:href="@{'/profile/'+${section}(pageNum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a></li>
+                    <li class="page-item" th:if="${pageInfo.pageNum != pageInfo.pages}"><a class="page-link" th:href="@{'/profile/'+${section}(pageNum=${pageInfo.pages})}">尾页</a></li>
                 </ul>
             </nav>
         </div>

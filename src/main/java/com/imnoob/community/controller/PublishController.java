@@ -1,7 +1,7 @@
 package com.imnoob.community.controller;
 
 import com.imnoob.community.exception.CustomizeException;
-import com.imnoob.community.exception.ExceptionEnum;
+import com.imnoob.community.enums.ExceptionEnum;
 import com.imnoob.community.mapper.QuestionMapper;
 import com.imnoob.community.mapper.UserMapper;
 import com.imnoob.community.model.Question;
@@ -31,7 +31,7 @@ public class PublishController {
     QuestionService questionService;
 
     @GetMapping("/publish/{id}")
-    String edit(@PathVariable(name = "id")Integer id,
+    String edit(@PathVariable(name = "id")Long id,
                 Model model){
         Question quedto = questionMapper.findQuestionById(id);
         model.addAttribute("title", quedto.getTitle());
@@ -87,18 +87,19 @@ public class PublishController {
             throw new CustomizeException(ExceptionEnum.NO_LOGIN);
         }
 
+
         if (question.getId() != null){
+            //编辑的逻辑
             question.setCreator(user.getId());
             question.setGmtCreate(System.currentTimeMillis());
-            questionMapper.createQuestion(question);
-            questionService.createQuestion(question);
+            questionService.modifiedQuestion(question);
+
         }else{
-            if (user.getId() == question.getCreator()){
-                question.setGmtModified(System.currentTimeMillis());
-                int tmp = questionService.modifiedQuestion(question);
-            }else{
-                throw new CustomizeException(ExceptionEnum.READ_NOTIFICATION_FAIL);
-            }
+            //添加问题的逻辑
+            question.setCreator(user.getId());
+            question.setGmtModified(System.currentTimeMillis());
+            questionService.createQuestion(question);
+
         }
 
         return "redirect:/";

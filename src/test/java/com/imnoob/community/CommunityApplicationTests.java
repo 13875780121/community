@@ -1,7 +1,10 @@
 package com.imnoob.community;
 
+import com.imnoob.community.dto.CommentDTO;
+import com.imnoob.community.mapper.CommentMapper;
 import com.imnoob.community.mapper.QuestionMapper;
 import com.imnoob.community.mapper.UserMapper;
+import com.imnoob.community.model.Comment;
 import com.imnoob.community.model.Question;
 import com.imnoob.community.model.User;
 import org.junit.jupiter.api.Test;
@@ -19,27 +22,20 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 class CommunityApplicationTests {
 
-   @Autowired
-    DataSource dataSource;
-
-   @Test
-   void test1() throws SQLException {
-       Connection connection = dataSource.getConnection();
-       System.out.println(connection);
-       connection.close();
-   }
 
    @Autowired
-    UserMapper userMapper;
+    CommentMapper commentMapper;
 
    @Autowired
-    QuestionMapper questionMapper;
+   QuestionMapper questionMapper;
    @Test
     void UserCRUD(){
-       List<Question> allQuestions = questionMapper.findAllQuestions();
-       for (Question item : allQuestions) {
-           System.out.println(item);
+       List<Question> questions = questionMapper.selectByTag("Spring|SpringBott|Java");
+       for (Question question : questions) {
+           System.out.println(question);
        }
+
+
    }
 
 }

@@ -3,13 +3,14 @@ package com.imnoob.community.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imnoob.community.dto.QuestionDTO;
+import com.imnoob.community.exception.CustomizeException;
+import com.imnoob.community.enums.ExceptionEnum;
 import com.imnoob.community.mapper.QuestionMapper;
 import com.imnoob.community.mapper.UserMapper;
 import com.imnoob.community.model.Question;
 import com.imnoob.community.model.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -50,11 +51,16 @@ public class QuestionService {
         PageHelper.startPage(pageNum, size);
         List<Question> list = questionMapper.findQuestionsById(id);
         PageInfo<Question> pageInfo = new PageInfo<>(list);
+
         return pageInfo;
     }
 
-    public QuestionDTO findQuestionById(Integer id) {
+    public QuestionDTO findQuestionById(Long id) {
         Question question = questionMapper.findQuestionById(id);
+
+        if (question == null){
+            throw new CustomizeException(ExceptionEnum.QUESTION_NOT_FOUND);
+        }
         User user = userMapper.findById(question.getCreator());
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
@@ -72,5 +78,13 @@ public class QuestionService {
 
     public int incView(Long id) {
         return questionMapper.incView(id);
+    }
+
+    public List<Question> selectByTag(String tag) {
+        if (tag == null || tag.equals("")) return new ArrayList<>();
+        String replace = tag.replace(",", "|");
+        List<Question> questions = questionMapper.selectByTag(replace);
+
+        return questions;
     }
 }

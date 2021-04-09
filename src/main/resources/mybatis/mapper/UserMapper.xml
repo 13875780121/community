@@ -23,6 +23,6 @@
     </update>
 
     <select id="findById" parameterType="java.lang.Long" resultType="User">
-        SELECT * FROM t_user WHERE id = #{id}
+        SELECT * FROM t_user WHERE id = #{id,jdbcType=BIGINT}
     </select>
 </mapper>

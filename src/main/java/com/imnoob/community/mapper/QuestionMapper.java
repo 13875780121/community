@@ -10,12 +10,10 @@ import java.util.List;
 public interface QuestionMapper {
     int createQuestion(Question question);
     List<Question> findAllQuestions();
-
     List<Question> findQuestionsById(@Param("id") Long id);
-
-    Question findQuestionById(@Param("id") Integer id);
-
+    Question findQuestionById(@Param("id") Long id);
     int modifiedQuestion(Question question);
-
     int incView(@Param("id") Long id);
+    int incCommentCount(@Param("id") Long id);
+    List<Question> selectByTag(@Param("tag") String tag);
 }
