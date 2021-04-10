@@ -1,0 +1,56 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imnoob.community.mapper.NoticeMapper">
+
+
+    <resultMap id="NoticeDTOMap" type="com.imnoob.community.dto.NoticeDTO">
+        <id property="id" column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="noticer" column="noticer" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="outerId" column="outer_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="type" column="type" javaType="java.lang.Integer"/>
+        <result property="gmtCreate" column="gmt_create" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="status" column="status" javaType="java.lang.Integer"/>
+        <result property="receiver" column="receiver" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="outerName" column="outer_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="notifierName" column="name" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    </resultMap>
+
+    <insert id="createNotice" parameterType="Notice" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_notice (noticer,outer_id,type,gmt_create,receiver,outer_name)  values
+        (
+        #{noticer,jdbcType=BIGINT},
+        #{outerId,jdbcType=INTEGER},
+        #{type},
+        #{gmtCreate,jdbcType=BIGINT},
+        #{receiver,jdbcType=BIGINT}, #{outerName,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <select id="unreadCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT count(1) FROM t_notice WHERE receiver = #{id} and status = 0
+    </select>
+
+    <select id="findAll" resultMap="NoticeDTOMap" parameterType="java.lang.Long">
+        SELECT t_n.*,t_u.name
+        FROM t_notice as t_n
+        join t_user as t_u
+        on t_n.noticer = t_u.id
+        WHERE receiver = #{id}
+    </select>
+
+    <select id="selectById" parameterType="java.lang.Long" resultType="Notice">
+        SELECT * FROM t_notice WHERE id = #{id}
+    </select>
+
+    <update id="readMsg" parameterType="java.lang.Long">
+        update t_notice
+        SET status = 1
+        WHERE id = #{id}
+    </update>
+
+
+
+
+
+
+
+</mapper>

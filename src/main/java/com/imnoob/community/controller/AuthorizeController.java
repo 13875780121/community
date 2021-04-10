@@ -4,6 +4,7 @@ package com.imnoob.community.controller;
 import com.imnoob.community.Utils.CommonUtils;
 import com.imnoob.community.dto.AccessToken;
 import com.imnoob.community.dto.GithubUser;
+import com.imnoob.community.mapper.NoticeMapper;
 import com.imnoob.community.mapper.UserMapper;
 import com.imnoob.community.model.User;
 import com.imnoob.community.provider.GithubProvider;
@@ -37,6 +38,9 @@ public class AuthorizeController {
     @Autowired
     UserMapper userMapper;
 
+    @Autowired
+    NoticeMapper noticeMapper;
+
     @GetMapping("/callback")
     public String callback(@RequestParam(value = "code")String code ,
                            @RequestParam(value = "state")String state,
@@ -60,6 +64,8 @@ public class AuthorizeController {
                 userMapper.modifiedToken(token);
                 admin.setToken(token);
                 session.setAttribute("user",admin);
+                Integer num = noticeMapper.unreadCount(admin.getId());
+                session.setAttribute("unreadCount",num);
             }
             //用户不存在 添加用户
             else{

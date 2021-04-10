@@ -37,11 +37,36 @@
 
                 <div class="form-group">
                     <label for="tag">添加标签:</label>
-                    <input type="text" class="form-control"  id="tag" name="tag"
+                    <input type="text" class="form-control" th:value="${tag}" id="tag" name="tag"
                            autocomplete="off"
                            placeholder="输入标签，以，号分隔"
-                            th:value="${tag}">
+                           onclick="showSelectTag()">
+                    <div id="select-tag" class="publish-tag-tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" th:each="tagEntry,tagStat: ${tags.tags}"
+                                th:class="${tagStat.first ? 'active':''}">
+                                <a th:href="${'#'+tagEntry.key}" aria-controls="home" role="tab"
+                                   data-toggle="tab" th:text="${tagEntry.key}"></a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" th:id="${tagEntry.key}"
+                                 th:each="tagEntry,tagStat: ${tags.tags}"
+                                 th:class="${tagStat.first ? 'active tab-pane':'tab-pane'}">
+                                <span>
+                                    <span th:each="selectTag: ${tagEntry.value}">
+                                    <span class="community-tag" onclick="selectTag(this)"
+                                          th:data-tag="${selectTag}"
+                                          th:text="${' '+selectTag}">
+                                    </span>
+                                </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+
                 <div class="container-fluid main ">
                     <div class="row">
                         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">

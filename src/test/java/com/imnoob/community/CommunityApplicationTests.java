@@ -10,7 +10,10 @@ import com.imnoob.community.model.User;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.sql.DataSource;
@@ -28,12 +31,15 @@ class CommunityApplicationTests {
 
    @Autowired
    QuestionMapper questionMapper;
+
+
+
+
+
    @Test
     void UserCRUD(){
-       List<Question> questions = questionMapper.selectByTag("Spring|SpringBott|Java");
-       for (Question question : questions) {
-           System.out.println(question);
-       }
+
+
 
 
    }

@@ -1,5 +1,7 @@
 package com.imnoob.community.controller;
 
+import com.imnoob.community.Utils.RedisUtils;
+import com.imnoob.community.dto.TagsDTO;
 import com.imnoob.community.exception.CustomizeException;
 import com.imnoob.community.enums.ExceptionEnum;
 import com.imnoob.community.mapper.QuestionMapper;
@@ -7,6 +9,7 @@ import com.imnoob.community.mapper.UserMapper;
 import com.imnoob.community.model.Question;
 import com.imnoob.community.model.User;
 import com.imnoob.community.service.QuestionService;
+import com.imnoob.community.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +33,9 @@ public class PublishController {
     @Autowired
     QuestionService questionService;
 
+    @Autowired
+    TagService tagService;
+
     @GetMapping("/publish/{id}")
     String edit(@PathVariable(name = "id")Long id,
                 Model model){
@@ -49,6 +55,10 @@ public class PublishController {
         HttpSession session = request.getSession();
         Object user = session.getAttribute("user");
         if (user == null) model.addAttribute("error", "请登陆");
+
+        TagsDTO tags = tagService.getAllTags();
+
+        model.addAttribute("tags", tags);
         return "publish";
     }
 
@@ -58,7 +68,8 @@ public class PublishController {
             HttpServletRequest request,
             Question question,
             Model model){
-
+        TagsDTO tags = tagService.getAllTags();
+        model.addAttribute("tags", tags);
         boolean hasError = false;
         if (question.getTag() == null || question.getTag().equals("")){
             model.addAttribute("error", "tag不为空");

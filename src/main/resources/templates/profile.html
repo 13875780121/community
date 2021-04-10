@@ -13,7 +13,6 @@
             <hr>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${section == 'questions'}">
 
-
                 <div class="media" th:each="question : ${pageInfo.list}">
                     <div class="media-left">
                         <a href="#">
@@ -31,7 +30,23 @@
                     </div>
                 </div>
             </div>
-            <nav aria-label="Page navigation">
+
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${section == 'replies'}">
+                <div class="media" th:each="noticeDTO : ${pagination.list}">
+                    <div class="media-body">
+                        <p class="media-heading">
+                            <span th:text="${noticeDTO.notifierName +' ' + noticeDTO.typeName + ' '}"></span>
+                            <a th:href="@{'/notification/'+ ${noticeDTO.id}}"
+                               th:text="${noticeDTO.outerName}">
+                            </a>
+                            <span class="label label-danger" th:if="${noticeDTO.status == 0}">未读</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <nav aria-label="Page navigation" th:if="${section == 'questions'}">
                 <ul class="pagination">
                     <li class="page-item" th:if="${pageInfo.pageNum != 1}"><a class="page-link" th:href="@{'/profile/'+${section}(pageNum=1)}">首页</a></li>
                     <li class="page-item" th:if="${pageInfo.pageNum!=1}"><a class="page-link" th:href="@{'/profile/'+${section}(pageNum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:${pageInfo.pages})}">上一页</a></li>
