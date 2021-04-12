@@ -4,10 +4,14 @@ package com.imnoob.community.controller;
 import com.imnoob.community.Utils.CommonUtils;
 import com.imnoob.community.dto.AccessToken;
 import com.imnoob.community.dto.GithubUser;
+import com.imnoob.community.enums.ExceptionEnum;
+import com.imnoob.community.exception.CustomizeException;
 import com.imnoob.community.mapper.NoticeMapper;
 import com.imnoob.community.mapper.UserMapper;
 import com.imnoob.community.model.User;
+import com.imnoob.community.provider.AutoLoginProvider;
 import com.imnoob.community.provider.GithubProvider;
+import com.imnoob.community.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -39,7 +43,10 @@ public class AuthorizeController {
     UserMapper userMapper;
 
     @Autowired
-    NoticeMapper noticeMapper;
+    NoticeService noticeService;
+
+    @Autowired
+    AutoLoginProvider autoLoginProvider;
 
     @GetMapping("/callback")
     public String callback(@RequestParam(value = "code")String code ,
@@ -56,6 +63,7 @@ public class AuthorizeController {
 
         if (user != null && token != null){
             User admin = userMapper.selectByAccountId(String.valueOf(user.getId()));
+
             //登陆成功
             HttpSession session = request.getSession();
 
@@ -64,26 +72,36 @@ public class AuthorizeController {
                 userMapper.modifiedToken(token);
                 admin.setToken(token);
                 session.setAttribute("user",admin);
-                Integer num = noticeMapper.unreadCount(admin.getId());
+                Integer num = noticeService.unreadCount(admin.getId());
                 session.setAttribute("unreadCount",num);
             }
             //用户不存在 添加用户
             else{
-                User admin1 = CommonUtils.GithubUserToUser(user);
-                admin1.setToken(token);
-                admin1.setAccountId(String.valueOf(user.getId()));
-                admin1.setGmtCreate(System.currentTimeMillis());
-                userMapper.insertUser(admin1);
-                session.setAttribute("user",admin1);
+                admin = CommonUtils.GithubUserToUser(user);
+                admin.setToken(token);
+                admin.setAccountId(String.valueOf(user.getId()));
+                admin.setGmtCreate(System.currentTimeMillis());
+                userMapper.insertUser(admin);
+                session.setAttribute("user",admin);
             }
 
-            Cookie cookie = new Cookie("token",token);
-            response.addCookie(cookie);
+            //发布  对应的cookie 实现自动登陆。未必能成功！
+            autoLoginProvider.storeToken(request,response,admin,token);
             return "redirect:/";
         }else{
             //登陆失败
-            return "redirect:/";
+            throw new CustomizeException(ExceptionEnum.LOGIN_FAILURE);
         }
+
+    }
+
+    @GetMapping(value = "/logout")
+    public String logout(HttpServletRequest request,HttpServletResponse response){
+        request.getSession().removeAttribute("user");
+        Cookie cookie = new Cookie("token", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/";
 
     }
 

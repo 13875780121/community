@@ -36,6 +36,10 @@
         SELECT * FROM t_comment WHERE id = #{id}
     </select>
 
+    <select id="queryLikeCount" resultType="java.lang.Integer" parameterType="java.lang.Long">
+        SELECT like_count FROM t_comment WHERE id = #{id}
+    </select>
+
 
 
     <insert id="insertComment" parameterType="Comment" useGeneratedKeys="true" keyProperty="id">
@@ -55,6 +59,13 @@
         update
             t_comment
         SET comment_count = comment_count + 1
+        WHERE id = #{id}
+    </update>
+
+    <update id="incLikeCount" parameterType="java.lang.Long">
+         update
+            t_comment
+        SET like_count = like_count + 1
         WHERE id = #{id}
     </update>
 </mapper>

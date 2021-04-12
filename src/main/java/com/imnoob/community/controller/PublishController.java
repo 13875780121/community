@@ -1,6 +1,5 @@
 package com.imnoob.community.controller;
 
-import com.imnoob.community.Utils.RedisUtils;
 import com.imnoob.community.dto.TagsDTO;
 import com.imnoob.community.exception.CustomizeException;
 import com.imnoob.community.enums.ExceptionEnum;

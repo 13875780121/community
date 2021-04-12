@@ -4,8 +4,11 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imnoob.community.dto.QuestionDTO;
+import com.imnoob.community.mapper.NoticeMapper;
 import com.imnoob.community.mapper.UserMapper;
 import com.imnoob.community.model.User;
+import com.imnoob.community.provider.AutoLoginProvider;
+import com.imnoob.community.service.NoticeService;
 import com.imnoob.community.service.QuestionService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,12 @@ public class IndexController {
     @Autowired
     QuestionService questionService;
 
+    @Autowired
+    NoticeMapper noticeMapper;
+
+    @Autowired
+    AutoLoginProvider autoLoginProvider;
+
     @GetMapping("/")
     String index(HttpServletRequest request,
                  HttpServletResponse response,
@@ -35,6 +44,13 @@ public class IndexController {
                  @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                  @RequestParam(value = "size",defaultValue = "8") Integer size){
 
+
+
+        String token = autoLoginProvider.checkCookie(request);
+        if (token != null){
+            User user = userMapper.selectByToken(token);
+            request.getSession().setAttribute("user",user);
+        }
 
         PageInfo<QuestionDTO> pageInfo = questionService.findAllQuestions(pageNum, size);
         model.addAttribute("pageInfo", pageInfo);

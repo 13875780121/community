@@ -31,9 +31,15 @@
 <!--                </div>-->
 
                 <!--内容-->
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="question-view" th:text="${question.description}">
-
+                <!--内容-->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="question-view">
+                    <textarea style="display:none;" th:text="${question.description}"></textarea>
                 </div>
+                <script type="text/javascript">
+                    $(function () {
+                        editormd.markdownToHTML("question-view", {});
+                    });
+                </script>
 
                 <!--标签-->
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -76,7 +82,12 @@
                             </h5>
                             <div th:text="${comment.content}"></div>
                             <div class="menu">
-                                <span class="glyphicon glyphicon-thumbs-up icon"></span>
+                                <span th:data-id="${comment.id}"
+                                      onclick="likeComment(this)" class="comment-icon">
+                                    <span class="glyphicon glyphicon-thumbs-up icon"></span>
+                                    <span th:text="${comment.likeCount}" id="thumb"></span>
+                                </span>
+<!--                                <span class="glyphicon glyphicon-thumbs-up icon" th:data-id="${comment.id}" onclick="likeComment(this)"></span>-->
                                 <span th:data-id="${comment.id}"
                                       onclick="collapseComments(this)" class="comment-icon">
                                     <span class="glyphicon glyphicon-comment"></span>

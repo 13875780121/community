@@ -12,7 +12,9 @@ public enum ExceptionEnum  {
     NOTIFICATION_NOT_FOUND(2009, "消息莫非是不翼而飞了？"),
     FILE_UPLOAD_FAIL(2010, "图片上传失败"),
     INVALID_INPUT(2011, "非法输入"),
-    INVALID_OPERATION(2012, "兄弟，是不是走错房间了？");
+    INVALID_OPERATION(2012, "兄弟，是不是走错房间了？"),
+    COOKIE_IP_ERROE(2013, "cookie与IP不匹配"),
+    LOGIN_FAILURE(2014, "登陆失败，请重试");
 
     public Integer getCode() {
         return code;

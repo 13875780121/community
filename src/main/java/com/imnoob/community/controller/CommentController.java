@@ -8,6 +8,7 @@ import com.imnoob.community.enums.ExceptionEnum;
 import com.imnoob.community.model.Comment;
 import com.imnoob.community.model.User;
 import com.imnoob.community.service.CommentService;
+import com.imnoob.community.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,9 @@ public class CommentController {
 
     @Autowired
     CommentService commentService;
+
+    @Autowired
+    RedisService redisService;
 
     @RequestMapping(value = "/comment", method = RequestMethod.POST)
     AjaxResult commitComment(@RequestBody CommentDTO commentDTO, HttpServletRequest request){
@@ -50,5 +54,21 @@ public class CommentController {
     public AjaxResult comments(@PathVariable(name = "id") Long id) {
         List<CommentDTO> list = commentService.findCommentByParId(id, CommentTypeEnum.COMMENT_TYPE.getType());
         return AjaxResult.okOf(200, "请求成功", list);
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/comment/like/{id}", method = RequestMethod.GET)
+    public AjaxResult likeComment(@PathVariable(name = "id") Long id,HttpServletRequest request) {
+        User u = (User) request.getSession().getAttribute("user");
+        if (u == null) throw new CustomizeException(ExceptionEnum.NO_LOGIN);
+        if (!redisService.isthumbUp(id,u.getId())){
+            Integer num = commentService.incLikeCount(id);
+            return AjaxResult.okOf(200, "请求成功",num);
+        }else{
+            return AjaxResult.okOf(201,"请求成功");
+        }
+
+
     }
 }

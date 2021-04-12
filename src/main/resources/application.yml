@@ -38,3 +38,15 @@ pagehelper:
 tagsKey: tag-language,tag-server,tag-tool,tag-db,tag-framework
 
 
+logging:
+  level:
+    root: info
+
+  logback:
+    rollingpolicy:
+      max-file-size: 200MB
+      max-history: 30
+
+  file:
+    path: logs/
+    name: community.log

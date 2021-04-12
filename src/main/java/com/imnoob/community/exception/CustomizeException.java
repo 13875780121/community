@@ -11,6 +11,7 @@ public class CustomizeException extends RuntimeException {
     }
 
     public CustomizeException(ExceptionEnum exceptionEnum) {
+        super(exceptionEnum.getMessage());
         this.msg = exceptionEnum.getMessage();
         this.code = exceptionEnum.getCode();
     }

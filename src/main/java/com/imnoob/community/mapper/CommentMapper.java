@@ -19,4 +19,7 @@ public interface CommentMapper {
     List<CommentDTO> selectByParId(@Param(value = "id") Long id, @Param(value = "type") Integer type);
 
 
+    Integer incLikeCount(@Param("id") Long id);
+
+    Integer queryLikeCount(@Param("id") Long id);
 }

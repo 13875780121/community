@@ -34,7 +34,8 @@
         FROM t_notice as t_n
         join t_user as t_u
         on t_n.noticer = t_u.id
-        WHERE receiver = #{id}
+        WHERE receiver = #{id} and receiver != noticer
+        order by gmt_create desc
     </select>
 
     <select id="selectById" parameterType="java.lang.Long" resultType="Notice">

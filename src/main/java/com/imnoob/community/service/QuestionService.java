@@ -77,6 +77,7 @@ public class QuestionService {
     }
 
     public int incView(Long id) {
+        System.out.println("浏览量加一 ---"+id);
         return questionMapper.incView(id);
     }
 

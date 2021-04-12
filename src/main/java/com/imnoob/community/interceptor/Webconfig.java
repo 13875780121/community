@@ -15,15 +15,10 @@ public class Webconfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
 
         registry.addInterceptor(sessionInterceptor).addPathPatterns("/**").
-//                addPathPatterns("/**").excludePathPatterns("/","/index","/callback", "/**/*.css", "/**/*.js", "/**/*.png",
-//                "/**/*.jpg","/**/*.jpeg", "/**/*.gif", "/**/fonts/*", "/**/*.svg","/**/*.ico","/**/*.map").
                 excludePathPatterns("/").
                 excludePathPatterns("/index").
-                excludePathPatterns("/callback").excludePathPatterns("/css/*.css").
-                excludePathPatterns("/js/*.js").excludePathPatterns("/images/*").excludePathPatterns("/fonts/*");
-
-//        .excludePathPatterns("/**/*.css").
-//                excludePathPatterns("/**/*.js").excludePathPatterns("/images/**")
+                excludePathPatterns("/callback").excludePathPatterns("/css/**").
+                excludePathPatterns("/js/**").excludePathPatterns("/images/**").excludePathPatterns("/fonts/**");
 
 
     }

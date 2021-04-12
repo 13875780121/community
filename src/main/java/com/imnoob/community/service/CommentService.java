@@ -87,4 +87,10 @@ public class CommentService {
         return list;
 //
     }
+
+    public Integer incLikeCount(Long id) {
+        System.out.println("点赞加一");
+        commentMapper.incLikeCount(id);
+        return commentMapper.queryLikeCount(id);
+    }
 }

@@ -1,9 +1,13 @@
 package com.imnoob.community.interceptor;
 
 
+import com.imnoob.community.enums.ExceptionEnum;
+import com.imnoob.community.exception.CustomizeException;
 import com.imnoob.community.mapper.NoticeMapper;
 import com.imnoob.community.mapper.UserMapper;
 import com.imnoob.community.model.User;
+import com.imnoob.community.provider.AutoLoginProvider;
+import com.imnoob.community.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
@@ -24,34 +28,32 @@ public class SessionInterceptor implements HandlerInterceptor {
     private UserMapper userMapper;
 
     @Autowired
-    private NoticeMapper noticeMapper;
+    private NoticeService noticeService;
+
+    @Autowired
+    private AutoLoginProvider autoLoginProvider;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         User user = (User) request.getSession().getAttribute("user");
-        if (user != null) return true;
+        if (user != null){
+            Integer num = noticeService.unreadCount(user.getId());
+            request.getSession().setAttribute("user",user);
+            request.getSession().setAttribute("unreadCount",num);
+            return true;
+        }
 
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null && cookies.length != 0)
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("token")) {
-                    String token = cookie.getValue();
-                    User u = userMapper.selectByToken(token);
-                    if (u != null){
-                        //查询未读消息
-                        Integer num = noticeMapper.unreadCount(u.getId());
-                        request.getSession().setAttribute("user",u);
-                        request.getSession().setAttribute("unreadCount",num);
-                        return true;
-                    }else{
-                        response.sendRedirect(request.getContextPath()+"/");
-                        return false;
-                    }
+        String token = autoLoginProvider.checkCookie(request);
+        if (token == null){
+            throw new CustomizeException(ExceptionEnum.NO_LOGIN);
+        }else{
+            user = userMapper.selectByToken(token);
+            request.getSession().setAttribute("user",user);
+            Integer num = noticeService.unreadCount(user.getId());
+            request.getSession().setAttribute("unreadCount",num);
+        }
 
-                }
-            }
-        response.sendRedirect(request.getContextPath()+"/");
-        return false;
+        return true;
     }
 
 

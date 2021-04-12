@@ -55,6 +55,7 @@ function comment(e) {
 
 }
 
+
 /**
  * 展开二级评论
  */
@@ -153,4 +154,22 @@ function selectTag(e) {
     else {
         $("#tag").val(value);
     }
+}
+
+function likeComment(e) {
+    var id = e.getAttribute("data-id");
+    $.ajax({
+        type:"GET",
+        url:"/comment/like/"+id,
+        contentType: 'application/json',
+        success: function (data) {
+            if (data.code == 200){
+                e.classList.add("active");
+                var num = data.data;
+               $('#thumb').text(num);
+            }else if (data.code == 201){
+                alert("你已经点赞了，请勿重复点赞!")
+            }
+        }
+    })
 }
