@@ -46,7 +46,6 @@ public class CommentController {
         commentService.insertComment(comment);
 
         return AjaxResult.okOf(200, "请求成功");
-
     }
 
     @ResponseBody

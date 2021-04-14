@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class QuestionContrller {
@@ -37,6 +38,10 @@ public class QuestionContrller {
                                  Model model, HttpServletRequest request){
 
         QuestionDTO quesDto = questionService.findQuestionById(id);
+        //
+        redisService.adddayboard(quesDto.getId(),quesDto.getTitle());
+        redisService.addscrollboard(quesDto.getId(),quesDto.getTitle());
+
         if (quesDto.getId() == null){
             throw new CustomizeException(ExceptionEnum.QUESTION_NOT_FOUND);
         }
@@ -46,8 +51,9 @@ public class QuestionContrller {
             //防止重复刷新导致浏览量增加 ，恶意刷浏览量
             boolean isreScan = redisService.isReScan(id, user.getId());
             if (!isreScan) questionService.incView(quesDto.getId());
-
         }
+
+
 
         List<CommentDTO> list = commentService.findCommentByParId(id, CommentTypeEnum.QUESTION_TYPE.getType());
         List<Question> questions = questionService.selectByTag(quesDto.getTag());

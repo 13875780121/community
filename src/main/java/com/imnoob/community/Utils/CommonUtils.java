@@ -4,11 +4,12 @@ import com.imnoob.community.dto.GithubUser;
 import com.imnoob.community.model.User;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 public class CommonUtils {
 
 
-
+//对象转换
     public static User GithubUserToUser(GithubUser guser){
         User user = new User();
         user.setAvatarUrl(guser.getAvatarUrl());
@@ -18,6 +19,7 @@ public class CommonUtils {
         return user;
     }
 
+//    获取IP地址
     public static String getIpAddr(HttpServletRequest request){
         String ipAddress = null;
         try {
@@ -47,5 +49,42 @@ public class CommonUtils {
         }
 
 
+    }
+    //
+    public static int calDayInYear(Date date){
+        int year = date.getYear();
+        int month = date.getMonth();
+        int day = date.getDay();
+        int sumDay = 0;
+        switch(month) {
+            case 12:
+                sumDay += 30;
+            case 11:
+                sumDay += 31;
+            case 10:
+                sumDay += 30;
+            case 9:
+                sumDay += 31;
+            case 8:
+                sumDay += 31;
+            case 7:
+                sumDay += 30;
+            case 6:
+                sumDay += 31;
+            case 5:
+                sumDay += 30;
+            case 4:
+                sumDay += 31;
+            case 3:
+                if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
+                    sumDay += 29;
+                } else
+                    sumDay += 28;
+            case 2:
+                sumDay += 31;
+            case 1:
+                sumDay += day;
+        }
+        return sumDay;
     }
 }
