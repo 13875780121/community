@@ -1,5 +1,6 @@
 package com.imnoob.community.controller;
 
+import com.imnoob.community.annotation.RateLimit;
 import com.imnoob.community.dto.CommentDTO;
 import com.imnoob.community.dto.QuestionDTO;
 import com.imnoob.community.enums.CommentTypeEnum;
@@ -33,6 +34,7 @@ public class QuestionContrller {
     @Autowired
     RedisService redisService;
 
+    @RateLimit(qps = 3)
     @GetMapping("/question/{id}")
     public String goQuestionPage(@PathVariable(value = "id")Long id,
                                  Model model, HttpServletRequest request){
