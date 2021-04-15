@@ -14,7 +14,8 @@ public enum ExceptionEnum  {
     INVALID_INPUT(2011, "非法输入"),
     INVALID_OPERATION(2012, "兄弟，是不是走错房间了？"),
     COOKIE_IP_ERROE(2013, "cookie与IP不匹配"),
-    LOGIN_FAILURE(2014, "登陆失败，请重试");
+    LOGIN_FAILURE(2014, "登陆失败，请重试"),
+    LIMITE_RATE(2015, "当前访问人数过多，请稍后再试");
 
     public Integer getCode() {
         return code;

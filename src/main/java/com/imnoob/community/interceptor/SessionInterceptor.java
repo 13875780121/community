@@ -8,6 +8,7 @@ import com.imnoob.community.mapper.UserMapper;
 import com.imnoob.community.model.User;
 import com.imnoob.community.provider.AutoLoginProvider;
 import com.imnoob.community.service.NoticeService;
+import com.imnoob.community.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,9 @@ public class SessionInterceptor implements HandlerInterceptor {
     @Autowired
     private AutoLoginProvider autoLoginProvider;
 
+    @Autowired
+    private RedisService redisService;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         User user = (User) request.getSession().getAttribute("user");
@@ -40,6 +44,14 @@ public class SessionInterceptor implements HandlerInterceptor {
             Integer num = noticeService.unreadCount(user.getId());
             request.getSession().setAttribute("user",user);
             request.getSession().setAttribute("unreadCount",num);
+
+            //统计网站登陆人次
+            if (user != null)
+                redisService.calLoginCount(user.getId());
+
+            //展示登陆人数
+            Long logincount = redisService.getlogincount();
+            request.getSession().setAttribute("loginCount",logincount);
             return true;
         }
 
@@ -52,7 +64,13 @@ public class SessionInterceptor implements HandlerInterceptor {
             Integer num = noticeService.unreadCount(user.getId());
             request.getSession().setAttribute("unreadCount",num);
         }
+        //统计网站登陆人次
+        if (user != null)
+            redisService.calLoginCount(user.getId());
 
+        //展示登陆人数
+        Long logincount = redisService.getlogincount();
+        request.getSession().setAttribute("loginCount",logincount);
         return true;
     }
 

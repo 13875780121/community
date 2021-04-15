@@ -18,10 +18,13 @@ public class RedisService {
     final static String DayBOARD_KEY_PREFIX = "dayboard::";
     final static String THUMB_KEY_PREFIX = "thumbup::";
     final static String SCROLL_BOARD_KEY_PREFIX = "scroll::";
+    final static String LOGIN_COUNT_KEY_PREFIX = "login::";
 
     final static Integer RANGE_INDEX = 0;
     final static Integer SIZE = 5;
     final static Integer OFFSET = 2;        //滚动榜单的跨度  2 天
+
+    final static Long LIMIT_RATE = 500L;   //每秒50QPS
 
     /**
      * 解决重复刷新导致浏览量增加
@@ -88,10 +91,12 @@ public class RedisService {
         redisTemplate.opsForZSet().incrementScore(key, val, 1);
         Double score1 = redisTemplate.opsForZSet().score(key, val);
 
-        int day1 = day - OFFSET;
+
+        int day1 = day - OFFSET + 1;
         if (day1 < 1) day1 = 365 + day1;
         key = DayBOARD_KEY_PREFIX+day1;
         Double score2 = redisTemplate.opsForZSet().score(key,val);
+        if (score2 == null) score2 = 0D;
 
         int day2 = day + 1;
         if (day2 > 365) day2 = day2 % 365;
@@ -105,6 +110,38 @@ public class RedisService {
         int day = CommonUtils.calDayInYear(date);
         String key = SCROLL_BOARD_KEY_PREFIX+day;
         return redisTemplate.opsForZSet().reverseRange(key, RANGE_INDEX, SIZE);
+    }
+
+    //统计网站登陆人次
+    public void calLoginCount(Long id){
+        Date date = new Date();
+        int day = CommonUtils.calDayInYear(date);
+
+        String key = LOGIN_COUNT_KEY_PREFIX + day;
+        String val = id.toString();
+        redisTemplate.opsForHyperLogLog().add(key,val);
+    }
+
+    public Long getlogincount(){
+        Date date = new Date();
+        int day = CommonUtils.calDayInYear(date);
+        String key = LOGIN_COUNT_KEY_PREFIX + day;
+        return  redisTemplate.opsForHyperLogLog().size(key);
+    }
+
+    //使用redis 实现限流操作
+    public Boolean isLimitQPS(){
+        Date date = new Date();
+        int day = CommonUtils.calDayInYear(date);
+        String tmp = String.valueOf(System.currentTimeMillis());
+
+        String str =tmp.substring(tmp.length()-5, tmp.length());
+        String key = "QPS::"+day+"::"+str;
+        Long rate = redisTemplate.opsForValue().increment(key);
+
+
+        if (rate > LIMIT_RATE) return true;
+        else return false;
     }
 
 

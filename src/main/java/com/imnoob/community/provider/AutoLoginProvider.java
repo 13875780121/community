@@ -58,13 +58,15 @@ public class AutoLoginProvider {
                 if (cookie.getName().equals("token")) {
                     String token = cookie.getValue();
                     String jsonStr = redisTemplate.opsForValue().get(token);
-                    if (jsonStr == null) return null;
+                    if (jsonStr == null){
+                        cookie.setMaxAge(0);
+                        return null;
+                    }
                     UserExt userExt = JSON.parseObject(jsonStr, UserExt.class);
                     if (userExt.getIpAddr().equals(CommonUtils.getIpAddr(request))) {
                         //刷新时间
                         redisTemplate.opsForValue().set(userExt.getToken(),jsonStr,30,TimeUnit.MINUTES);
                         cookie.setMaxAge(cookieTime);
-
                         return userExt.getToken();
                     } else
                         throw new CustomizeException(ExceptionEnum.COOKIE_IP_ERROE);

@@ -1,5 +1,9 @@
 package com.imnoob.community.filter;
 
+import com.imnoob.community.enums.ExceptionEnum;
+import com.imnoob.community.exception.CustomizeException;
+import com.imnoob.community.service.RedisService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -11,9 +15,19 @@ import java.io.IOException;
 @WebFilter(urlPatterns = {"/css/*","/js/*","/images/*"})
 public class MyFilter implements Filter {
 
+    @Autowired
+    RedisService redisService;
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+
+        //全局限流
+        Boolean islimit = redisService.isLimitQPS();
+        if (islimit){
+
+            throw new CustomizeException(ExceptionEnum.LIMITE_RATE);
+        }
+
 
         servletResponse.setCharacterEncoding("utf-8");
         servletResponse.setCharacterEncoding("utf-8");

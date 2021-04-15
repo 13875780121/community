@@ -16,12 +16,10 @@
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <form class="navbar-form navbar-left" action="/" method="get">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="search" placeholder="搜索问题">
-                    </div>
-                    <button type="submit" class="btn btn-default">搜索</button>
-                </form>
+                <div th:if="${session.user != null}">
+                    <span>今日登陆人数---</span>
+                    <span th:text="${session.loginCount}"></span>
+                </div>
 
                 <ul class="nav navbar-nav navbar-right">
                     <li th:if="${session.user == null}">
