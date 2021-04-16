@@ -138,8 +138,6 @@ public class RedisService {
         String str =tmp.substring(tmp.length()-5, tmp.length());
         String key = "QPS::"+day+"::"+str;
         Long rate = redisTemplate.opsForValue().increment(key);
-
-
         if (rate > LIMIT_RATE) return true;
         else return false;
     }

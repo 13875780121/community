@@ -44,33 +44,23 @@ public class SessionInterceptor implements HandlerInterceptor {
             Integer num = noticeService.unreadCount(user.getId());
             request.getSession().setAttribute("user",user);
             request.getSession().setAttribute("unreadCount",num);
-
-            //统计网站登陆人次
-            if (user != null)
-                redisService.calLoginCount(user.getId());
-
-            //展示登陆人数
-            Long logincount = redisService.getlogincount();
-            request.getSession().setAttribute("loginCount",logincount);
             return true;
+        }else{
+            String token = autoLoginProvider.checkCookie(request);
+            if (token == null){
+                throw new CustomizeException(ExceptionEnum.NO_LOGIN);
+            }else{
+                user = userMapper.selectByToken(token);
+                request.getSession().setAttribute("user",user);
+                Integer num = noticeService.unreadCount(user.getId());
+                request.getSession().setAttribute("unreadCount",num);
+            }
         }
 
-        String token = autoLoginProvider.checkCookie(request);
-        if (token == null){
-            throw new CustomizeException(ExceptionEnum.NO_LOGIN);
-        }else{
-            user = userMapper.selectByToken(token);
-            request.getSession().setAttribute("user",user);
-            Integer num = noticeService.unreadCount(user.getId());
-            request.getSession().setAttribute("unreadCount",num);
-        }
         //统计网站登陆人次
         if (user != null)
             redisService.calLoginCount(user.getId());
 
-        //展示登陆人数
-        Long logincount = redisService.getlogincount();
-        request.getSession().setAttribute("loginCount",logincount);
         return true;
     }
 

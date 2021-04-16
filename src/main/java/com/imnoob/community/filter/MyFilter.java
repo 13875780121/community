@@ -2,6 +2,7 @@ package com.imnoob.community.filter;
 
 import com.imnoob.community.enums.ExceptionEnum;
 import com.imnoob.community.exception.CustomizeException;
+import com.imnoob.community.model.User;
 import com.imnoob.community.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,9 +25,16 @@ public class MyFilter implements Filter {
         //全局限流
         Boolean islimit = redisService.isLimitQPS();
         if (islimit){
-
             throw new CustomizeException(ExceptionEnum.LIMITE_RATE);
         }
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        User user = (User) request.getSession().getAttribute("user");
+
+
+
+        //展示登陆人数
+        Long logincount = redisService.getlogincount();
+        request.getSession().setAttribute("loginCount",logincount);
 
 
         servletResponse.setCharacterEncoding("utf-8");
