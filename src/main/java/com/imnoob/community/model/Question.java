@@ -39,4 +39,6 @@ public class Question {
 
 
     private String description;
+
+    private Integer status;
 }

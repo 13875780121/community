@@ -35,6 +35,7 @@ public class PublishController {
     @Autowired
     TagService tagService;
 
+    //编辑
     @GetMapping("/publish/{id}")
     String edit(@PathVariable(name = "id")Long id,
                 Model model){
@@ -47,6 +48,7 @@ public class PublishController {
         return "publish";
 
     }
+    //跳转发布页
     @GetMapping("/publish")
     String publish(HttpServletResponse response,
                    HttpServletRequest request,
@@ -61,6 +63,7 @@ public class PublishController {
         return "publish";
     }
 
+    //提交内容
     @PostMapping("/publish")
     String doPublish(
             HttpServletResponse response,

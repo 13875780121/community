@@ -25,6 +25,7 @@ public class RateLimitAspect {
     //用来存放不同接口的RateLimiter(key为接口名称，value为RateLimiter)
     private ConcurrentHashMap<String, RateLimiter> map = new ConcurrentHashMap<>();
     private RateLimiter rateLimiter;
+
     @Pointcut("@annotation(com.imnoob.community.annotation.RateLimit)")
     public void serviceLimit() {
     }
