@@ -20,4 +20,6 @@ public class QuestionDTO {
     private Integer sticky;
     private String description;
     private User user;
+    private Integer status;
+    private String statusInfo;
 }

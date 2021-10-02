@@ -9,7 +9,7 @@
     </insert>
 
     <select id="findAllQuestions" resultType="Question">
-        SELECT * FROM t_question WHERE status = 1
+        SELECT * FROM t_question WHERE status = 1 or status = 2
     </select>
 
     <select id="findQuestionsById" resultType="Question" parameterType="java.lang.Long">

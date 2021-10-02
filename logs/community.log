@@ -34,3 +34,39 @@
 2021-10-02 11:03:43.267  INFO 1488 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2021-10-02 11:03:43.268  INFO 1488 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
 2021-10-02 11:03:44.648  INFO 1488 --- [http-nio-8887-exec-1] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2021-10-02 14:31:16.282  INFO 8760 --- [main] c.imnoob.community.CommunityApplication  : Starting CommunityApplication using Java 1.8.0_271 on DESKTOP-A196O2N with PID 8760 (G:\workspace\community\target\classes started by noob in G:\workspace\community)
+2021-10-02 14:31:16.286  INFO 8760 --- [main] c.imnoob.community.CommunityApplication  : No active profile set, falling back to default profiles: default
+2021-10-02 14:31:18.261  INFO 8760 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-10-02 14:31:18.266  INFO 8760 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-10-02 14:31:18.363  INFO 8760 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 69 ms. Found 0 Redis repository interfaces.
+2021-10-02 14:31:20.388  INFO 8760 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
+2021-10-02 14:31:20.402  INFO 8760 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-10-02 14:31:20.403  INFO 8760 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.44]
+2021-10-02 14:31:20.622  INFO 8760 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-10-02 14:31:20.623  INFO 8760 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4112 ms
+2021-10-02 14:31:22.140  INFO 8760 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-10-02 14:31:22.314  INFO 8760 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2021-10-02 14:31:22.887  INFO 8760 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
+2021-10-02 14:31:22.900  INFO 8760 --- [main] c.imnoob.community.CommunityApplication  : Started CommunityApplication in 7.56 seconds (JVM running for 8.535)
+2021-10-02 14:31:41.246  INFO 8760 --- [http-nio-8887-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-10-02 14:31:41.247  INFO 8760 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-10-02 14:31:41.249  INFO 8760 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2021-10-02 14:31:42.647  INFO 8760 --- [http-nio-8887-exec-1] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2021-10-02 14:45:44.286  INFO 3496 --- [main] c.imnoob.community.CommunityApplication  : Starting CommunityApplication using Java 1.8.0_271 on DESKTOP-A196O2N with PID 3496 (G:\workspace\community\target\classes started by noob in G:\workspace\community)
+2021-10-02 14:45:44.293  INFO 3496 --- [main] c.imnoob.community.CommunityApplication  : No active profile set, falling back to default profiles: default
+2021-10-02 14:45:46.837  INFO 3496 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-10-02 14:45:46.843  INFO 3496 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-10-02 14:45:46.916  INFO 3496 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 29 ms. Found 0 Redis repository interfaces.
+2021-10-02 14:45:48.913  INFO 3496 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
+2021-10-02 14:45:48.927  INFO 3496 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-10-02 14:45:48.928  INFO 3496 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.44]
+2021-10-02 14:45:49.147  INFO 3496 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-10-02 14:45:49.147  INFO 3496 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4448 ms
+2021-10-02 14:45:50.676  INFO 3496 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-10-02 14:45:50.858  INFO 3496 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2021-10-02 14:45:51.402  INFO 3496 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
+2021-10-02 14:45:51.419  INFO 3496 --- [main] c.imnoob.community.CommunityApplication  : Started CommunityApplication in 9.346 seconds (JVM running for 11.316)
+2021-10-02 14:46:17.751  INFO 3496 --- [http-nio-8887-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-10-02 14:46:17.751  INFO 3496 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-10-02 14:46:17.755  INFO 3496 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2021-10-02 14:46:18.985  INFO 3496 --- [http-nio-8887-exec-1] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
