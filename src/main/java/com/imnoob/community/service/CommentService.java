@@ -93,4 +93,9 @@ public class CommentService {
         commentMapper.incLikeCount(id);
         return commentMapper.queryLikeCount(id);
     }
+
+    public Comment selectComment(Long id) {
+
+        return commentMapper.selectById(id);
+    }
 }

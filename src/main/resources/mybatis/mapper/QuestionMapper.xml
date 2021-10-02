@@ -69,6 +69,13 @@
         WHERE id = #{id}
     </update>
 
+    <update id="incView" parameterType="java.lang.Long">
+        update
+            t_question
+        SET like_count = like_count + 1
+        WHERE id = #{id}
+    </update>
+
     <update id="incCommentCount" parameterType="java.lang.Long">
         update
             t_question

@@ -6,12 +6,13 @@ import com.imnoob.community.dto.QuestionDTO;
 import com.imnoob.community.exception.CustomizeException;
 import com.imnoob.community.enums.ExceptionEnum;
 import com.imnoob.community.mapper.QuestionMapper;
+import com.imnoob.community.mapper.ReporteMapper;
 import com.imnoob.community.mapper.UserMapper;
-import com.imnoob.community.model.Question;
-import com.imnoob.community.model.User;
+import com.imnoob.community.model.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,47 @@ public class QuestionService {
 
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    ReporteMapper reporteMapper;
+
+    @Autowired
+    NoticeService noticeService;
+
+    @Autowired
+    CommentService commentService;
+
+
+
+    @Transactional
+    public int report(Reporter reporter) {
+        reporteMapper.insert(reporter);
+        Notice notice = new Notice();
+        notice.setType(4);
+        notice.setNoticer(reporter.getReporterId());
+        notice.setReceiver(reporter.getReportedId());
+        notice.setGmtCreate(System.currentTimeMillis());
+        notice.setStatus(0);
+        if (reporter.getType() == 1){
+            //举报文章
+            QuestionDTO ques = findQuestionById(reporter.getContentId());
+            notice.setOuterName(ques.getTitle());
+            notice.setOuterId(ques.getId());
+        }else if (reporter.getType() == 2){
+            //举报 评论
+            Comment comment = commentService.selectComment(reporter.getContentId());
+            if (comment.getType() == 2){
+                comment = commentService.selectComment(comment.getParentId());
+            }
+            QuestionDTO ques = findQuestionById(comment.getParentId());
+            notice.setOuterName(ques.getTitle()+"的评论");
+            notice.setOuterId(ques.getId());
+        }
+
+
+        noticeService.createNotice(notice);
+        return reporteMapper.insert(reporter);
+    }
 
     public PageInfo<QuestionDTO> findAllQuestions(Integer pageNum, Integer size){
         //实现分页
@@ -77,8 +119,13 @@ public class QuestionService {
     }
 
     public int incView(Long id) {
-        System.out.println("浏览量加一 ---"+id);
+
         return questionMapper.incView(id);
+    }
+
+    public int incLike(Long id) {
+
+        return questionMapper.incLike(id);
     }
 
     public List<Question> selectByTag(String tag) {

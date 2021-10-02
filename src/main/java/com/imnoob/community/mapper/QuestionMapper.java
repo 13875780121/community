@@ -16,4 +16,6 @@ public interface QuestionMapper {
     int incView(@Param("id") Long id);
     int incCommentCount(@Param("id") Long id);
     List<Question> selectByTag(@Param("tag") String tag);
+
+    int incLike(Long id);
 }

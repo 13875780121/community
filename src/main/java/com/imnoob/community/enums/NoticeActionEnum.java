@@ -5,7 +5,8 @@ import com.imnoob.community.exception.CustomizeException;
 public enum NoticeActionEnum {
     NOTICE_REPLY(1,"回复了"),
     NOTICE_LIKE(2,"点赞了"),
-    NOTICE_COLLECT(3,"评论了");
+    NOTICE_COLLECT(3,"评论了"),
+    NOTICE_REPORTE(4,"举报了");
     private Integer type;
     private String actionName;
 
