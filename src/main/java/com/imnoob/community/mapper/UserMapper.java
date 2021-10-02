@@ -16,4 +16,6 @@ public interface UserMapper {
     int modifiedToken(@Param("token") String token);
 
     User findById(@Param("id") Long id);
+
+    int incIntegral(@Param("id") Long id ,@Param("integral") Integer integral);
 }

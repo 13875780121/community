@@ -36,8 +36,10 @@ public class QuestionService {
 
 
 
+
     @Transactional
     public int report(Reporter reporter) {
+        userMapper.incIntegral(reporter.getReportedId(), -20);
         reporteMapper.insert(reporter);
         Notice notice = new Notice();
         notice.setType(4);
@@ -111,6 +113,7 @@ public class QuestionService {
     }
 
     public void createQuestion(Question question) {
+        userMapper.incIntegral(question.getCreator(), 5);
         questionMapper.createQuestion(question);
     }
 
@@ -124,7 +127,7 @@ public class QuestionService {
     }
 
     public int incLike(Long id) {
-
+        userMapper.incIntegral(id, 1);
         return questionMapper.incLike(id);
     }
 

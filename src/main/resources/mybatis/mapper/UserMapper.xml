@@ -25,4 +25,11 @@
     <select id="findById" parameterType="java.lang.Long" resultType="User">
         SELECT * FROM t_user WHERE id = #{id,jdbcType=BIGINT}
     </select>
+
+    <update id="incIntegral" parameterType="java.lang.Integer">
+        update
+            t_user
+        SET integral = integral + #{integral}
+        WHERE id = #{id}
+    </update>
 </mapper>
