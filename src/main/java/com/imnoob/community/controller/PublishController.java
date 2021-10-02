@@ -111,6 +111,7 @@ public class PublishController {
             //添加问题的逻辑
             question.setCreator(user.getId());
             question.setGmtModified(System.currentTimeMillis());
+//            question.setStatus();
             questionService.createQuestion(question);
 
         }
