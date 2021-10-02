@@ -1,6 +1,7 @@
 package com.imnoob.community.controller;
 
 import com.imnoob.community.dto.TagsDTO;
+import com.imnoob.community.enums.QuestionStatusConstant;
 import com.imnoob.community.exception.CustomizeException;
 import com.imnoob.community.enums.ExceptionEnum;
 import com.imnoob.community.mapper.QuestionMapper;
@@ -100,20 +101,17 @@ public class PublishController {
             throw new CustomizeException(ExceptionEnum.NO_LOGIN);
         }
 
-
+        questionService.createQuestion(question);
         if (question.getId() != null){
             //编辑的逻辑
             question.setCreator(user.getId());
             question.setGmtCreate(System.currentTimeMillis());
             questionService.modifiedQuestion(question);
-
         }else{
             //添加问题的逻辑
             question.setCreator(user.getId());
             question.setGmtModified(System.currentTimeMillis());
-//            question.setStatus();
-            questionService.createQuestion(question);
-
+            question.setStatus(QuestionStatusConstant.PUBLISHED);
         }
 
         return "redirect:/";
