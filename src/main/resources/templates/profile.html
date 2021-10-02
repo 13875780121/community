@@ -28,6 +28,9 @@
                                 th:text="${question.viewCount}"></span> 次浏览 • <span
                                 th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span></span>
                     </div>
+                    <div class="media-right">
+                        <span th:text="${question.statusInfo}"></span>
+                    </div>
                 </div>
             </div>
 
