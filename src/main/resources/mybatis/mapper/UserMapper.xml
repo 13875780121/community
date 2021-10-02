@@ -4,10 +4,10 @@
     <insert id="insertUser" parameterType="com.imnoob.community.model.User" keyProperty="id" useGeneratedKeys="true">
         insert into t_user (account_id, name,
         token, gmt_create, gmt_modified,
-        bio, avatar_url)
+        bio, avatar_url,integral,birth_time,gender,degree)
         values ( #{accountId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
         #{token,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=BIGINT}, #{gmtModified,jdbcType=BIGINT},
-        #{bio,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR})
+        #{bio,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR}, #{integral},  #{birthTime}, #{gender},#{degree})
     </insert>
 
     <select id="selectByToken" parameterType="java.lang.String" resultType="User">

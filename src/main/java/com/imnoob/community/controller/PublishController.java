@@ -106,12 +106,13 @@ public class PublishController {
             //编辑的逻辑
             question.setCreator(user.getId());
             question.setGmtCreate(System.currentTimeMillis());
+            question.setStatus(QuestionStatusConstant.AUDITING);
             questionService.modifiedQuestion(question);
         }else{
             //添加问题的逻辑
             question.setCreator(user.getId());
             question.setGmtModified(System.currentTimeMillis());
-            question.setStatus(QuestionStatusConstant.PUBLISHED);
+            question.setStatus(QuestionStatusConstant.AUDITING);
         }
 
         return "redirect:/";

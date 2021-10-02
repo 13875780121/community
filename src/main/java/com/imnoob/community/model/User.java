@@ -16,4 +16,9 @@ public class User {
     private Long gmtModified;
     private String bio;
     private String avatarUrl;
+
+    private Integer integral;
+    private Long birthTime;
+    private Integer gender;
+    private String degree;
 }
