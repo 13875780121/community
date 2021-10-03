@@ -1,7 +1,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.imnoob.community.mapper.ReporteMapper">
 
-    <insert id="insert" parameterType="Reporte">
+    <insert id="insert" parameterType="Reporter">
         insert into
         t_reporte (type,reporter_id,reported_id,gmt_create,report_type,orther_info,content_id)
         values
