@@ -36,6 +36,7 @@ public class CommentController {
         }
 
         if (commentDTO.getType() == null) throw new CustomizeException(ExceptionEnum.TYPE_PARAM_WRONG);
+        //TODO 用户禁言校验
         Comment comment = new Comment();
         comment.setParentId(commentDTO.getParentId());
         comment.setContent(commentDTO.getContent());
