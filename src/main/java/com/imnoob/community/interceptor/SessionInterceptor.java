@@ -46,6 +46,7 @@ public class SessionInterceptor implements HandlerInterceptor {
             request.getSession().setAttribute("unreadCount",num);
             return true;
         }else{
+            System.out.println(request.getServletPath());
             String token = autoLoginProvider.checkCookie(request);
             if (token == null){
                 throw new CustomizeException(ExceptionEnum.NO_LOGIN);

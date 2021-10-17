@@ -121,7 +121,53 @@ function collapseComments(e) {
         }
     }
 }
+function reportComments(e) {
+    var contentid = e.getAttribute("data-id");
+    var id = e.getAttribute("user-id");
 
+
+    var jstring = {
+        reporterId:'',  //用户id
+        reportedId:id,
+        reportType:1, //举报类型 血腥暴力
+        contentId:contentid,
+        otherInfo:'',
+    };
+    $.ajax({
+        type: "POST",
+        url: "/comment/report",
+        data: JSON.stringify(jstring),
+        dataType: "json",
+        contentType: 'application/json',
+        success: function(msg){
+            alert( " 举报成功  " );
+        }
+    });
+
+
+}
+function reportQuestion(e){
+    var contentid = e.getAttribute("data-id");
+    var id = e.getAttribute("user-id");
+
+    var jstring = {
+        reporterId:'',  //用户id
+        reportedId:id,
+        reportType:1, //举报类型 血腥暴力
+        contentId:contentid,
+        otherInfo:'',
+    };
+    $.ajax({
+        type: "POST",
+        url: "/question/report",
+        data: JSON.stringify(jstring),
+        dataType: "json",
+        contentType: 'application/json',
+        success: function(msg){
+            alert( "举报成功 " );
+        }
+    });
+}
 function showSelectTag() {
     $("#select-tag").show();
 }

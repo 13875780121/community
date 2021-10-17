@@ -62,8 +62,6 @@ public class QuestionService {
             notice.setOuterName(ques.getTitle()+"的评论");
             notice.setOuterId(ques.getId());
         }
-
-
         noticeService.createNotice(notice);
         return reporteMapper.insert(reporter);
     }
@@ -114,6 +112,7 @@ public class QuestionService {
 
     public void createQuestion(Question question) {
         userMapper.incIntegral(question.getCreator(), 5);
+        question.setStatus(1);
         questionMapper.createQuestion(question);
     }
 

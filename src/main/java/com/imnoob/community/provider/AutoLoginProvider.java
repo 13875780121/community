@@ -38,7 +38,7 @@ public class AutoLoginProvider {
 
         userExt.setIpAddr(ipAddr);
         String val = JSON.toJSONString(userExt);
-        redisTemplate.opsForValue().set(token,val,30, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(token,val,30);
 
         publishCookie(request,response,token);
     }
@@ -63,6 +63,10 @@ public class AutoLoginProvider {
                         return null;
                     }
                     UserExt userExt = JSON.parseObject(jsonStr, UserExt.class);
+                    //刷新时间
+//                    redisTemplate.opsForValue().set(userExt.getToken(),jsonStr,30,TimeUnit.MINUTES);
+//                    cookie.setMaxAge(cookieTime);userExt = {UserExt@8021} "UserExt(id=7, accountId=61342009, token=ghu_vxqBSoN4nHbvBPnmxk5nFkJBLMnbMl1k3xht, IpAddr=0:0:0:0:0:0:0:1)"
+//                    return userExt.getToken();
                     if (userExt.getIpAddr().equals(CommonUtils.getIpAddr(request))) {
                         //刷新时间
                         redisTemplate.opsForValue().set(userExt.getToken(),jsonStr,30,TimeUnit.MINUTES);

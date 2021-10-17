@@ -26,10 +26,10 @@
         SELECT * FROM t_user WHERE id = #{id,jdbcType=BIGINT}
     </select>
 
-    <update id="incIntegral" parameterType="java.lang.Integer">
+    <update id="incIntegral" >
         update
             t_user
         SET integral = integral + #{integral}
-        WHERE id = #{id}
+        WHERE id = #{id,jdbcType=BIGINT}
     </update>
 </mapper>

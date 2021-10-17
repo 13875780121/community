@@ -11,7 +11,7 @@
         <result property="likeCount" column="like_count" javaType="java.lang.Long" jdbcType="BIGINT"/>
         <result property="commentCount" column="comment_count" javaType="java.lang.Integer"/>
         <result property="content" column="content" javaType="java.lang.String"/>
-
+        <result property="status" column="status" javaType="java.lang.Integer"/>
         <association property="user" javaType="com.imnoob.community.model.User">
             <id property="id" column="adminId" javaType="java.lang.Long"/>
             <result property="name" column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -43,12 +43,12 @@
 
 
     <insert id="insertComment" parameterType="Comment" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO t_comment(parent_id,type,user_id,gmt_create,gmt_modified,like_count,content,comment_count)  values
+        INSERT INTO t_comment(parent_id,type,user_id,gmt_create,gmt_modified,like_count,content,comment_count,status)  values
         (
         #{parentId,jdbcType=BIGINT},
         #{type,jdbcType=INTEGER},
         #{userId,jdbcType=BIGINT}, #{gmtCreate,jdbcType=BIGINT}, #{gmtModified,jdbcType=BIGINT},
-        #{likeCount,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, #{commentCount,jdbcType=INTEGER}
+        #{likeCount,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, #{commentCount,jdbcType=INTEGER},#{status,jdbcType=INTEGER}
         )
     </insert>
 

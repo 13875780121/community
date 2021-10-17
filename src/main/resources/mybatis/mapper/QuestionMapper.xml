@@ -3,13 +3,13 @@
 
     <insert id="createQuestion" parameterType="Question">
         insert into
-        t_question (title,description,creator,gmt_create,tag)
+        t_question (title,description,creator,gmt_create,tag,status)
         values
-        (#{title},#{description},#{creator},#{gmtCreate},#{tag})
+        (#{title},#{description},#{creator},#{gmtCreate},#{tag},#{status})
     </insert>
 
     <select id="findAllQuestions" resultType="Question">
-        SELECT * FROM t_question WHERE status = 1 or status = 2
+        SELECT * FROM t_question WHERE status = 1 or status = 2 ORDER BY gmt_create
     </select>
 
     <select id="findQuestionsById" resultType="Question" parameterType="java.lang.Long">

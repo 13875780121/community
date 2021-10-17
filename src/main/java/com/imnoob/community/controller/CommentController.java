@@ -2,17 +2,22 @@ package com.imnoob.community.controller;
 
 import com.imnoob.community.dto.AjaxResult;
 import com.imnoob.community.dto.CommentDTO;
+import com.imnoob.community.dto.ReportDTO;
 import com.imnoob.community.enums.CommentTypeEnum;
 import com.imnoob.community.exception.CustomizeException;
 import com.imnoob.community.enums.ExceptionEnum;
 import com.imnoob.community.model.Comment;
+import com.imnoob.community.model.Reporter;
 import com.imnoob.community.model.User;
 import com.imnoob.community.service.CommentService;
+import com.imnoob.community.service.QuestionService;
 import com.imnoob.community.service.RedisService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -24,6 +29,9 @@ public class CommentController {
 
     @Autowired
     RedisService redisService;
+    @Autowired
+    QuestionService questionService;
+
 
     @RequestMapping(value = "/comment", method = RequestMethod.POST)
     AjaxResult commitComment(@RequestBody CommentDTO commentDTO, HttpServletRequest request){
@@ -68,7 +76,20 @@ public class CommentController {
         }else{
             return AjaxResult.okOf(201,"请求成功");
         }
+    }
 
-
+    @ResponseBody
+    @PostMapping("/comment/report")
+    public AjaxResult reportComment(@RequestBody ReportDTO reportDTO, HttpServletRequest request,
+                                    HttpServletResponse response){
+        //TODO
+        HttpSession session = request.getSession();
+        User admin = (User) session.getAttribute("user");
+        Reporter rep = new Reporter();
+        BeanUtils.copyProperties(reportDTO,rep);
+        rep.setType(2);
+        rep.setReporterId(admin.getId());
+        questionService.report(rep);
+        return AjaxResult.okOf(200, "请求成功");
     }
 }

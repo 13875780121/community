@@ -76,6 +76,7 @@ public class CommentService {
             notice.setOuterName(question.getTitle());
             notice.setReceiver(question.getCreator());
             notice.setOuterId(question.getId());
+            comment.setStatus(1);
             commentMapper.insertComment(comment);
         }
 

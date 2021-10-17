@@ -10,16 +10,20 @@ import com.imnoob.community.exception.CustomizeException;
 import com.imnoob.community.enums.ExceptionEnum;
 
 import com.imnoob.community.model.Question;
+import com.imnoob.community.model.Reporter;
 import com.imnoob.community.model.User;
 import com.imnoob.community.service.CommentService;
 import com.imnoob.community.service.QuestionService;
 import com.imnoob.community.service.RedisService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Set;
 
@@ -70,9 +74,16 @@ public class QuestionContrller {
 
     @ResponseBody
     @PostMapping("/question/report")
-    public AjaxResult reportQuestion(@RequestBody ReportDTO reportDTO){
+    public AjaxResult reportQuestion(@RequestBody ReportDTO reportDTO,HttpServletRequest request,
+                                     HttpServletResponse response){
         //TODO 积分
-        questionService.report(reportDTO.getReporte());
+        HttpSession session = request.getSession();
+        Reporter rep = new Reporter();
+        BeanUtils.copyProperties(reportDTO,rep);
+        rep.setType(1);
+        User user = (User) session.getAttribute("user");
+        rep.setReporterId(user.getId());
+        questionService.report(rep);
         return AjaxResult.okOf(200, "请求成功");
     }
 

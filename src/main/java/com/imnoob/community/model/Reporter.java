@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Reporter {
-    private Integer id;
+    private Long id;
     private Integer type;
     private Long reporterId;
     private Long reportedId;

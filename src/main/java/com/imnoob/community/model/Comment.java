@@ -29,4 +29,6 @@ public class Comment {
 
 
     private Integer commentCount;
+
+    private Integer status;
 }
